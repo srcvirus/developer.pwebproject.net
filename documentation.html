@@ -139,21 +139,73 @@
 					<div class="cl">&nbsp;</div>
 				</section>-->
 
+                <a id="top"></a>
 				<section class="content">
-					<p>The REST API for accessing Home-Agents has the following format: 
-					    <font face="courier" size="2.5%" color="red"><strong>&lt;home_agent_fqdn&gt;:&lt;home_agent_port&gt;/?method=method_name&amp;parameters</strong></font>.
-                        In the following we explain the methods and the parameters supported by each of the methods.
+					<p style="width: 80%">A pWeb home agent exposes a number of RESTful API for developing applications. The home agent REST API has the following format: 
+					    <font face="courier" size="2.5%" color="blue"><strong>http://&lt;home_agent_fqdn&gt;:&lt;home_agent_port&gt;/?method=method_name&amp;parameters</strong></font>.
+                        The available methods are summerized in the following table. Then we describe each method in detail with their corresponding parameters and return values.
                     </p>
+                    <div align="center" style="width: 80%">
+                        <table border="1" cellspacing="0" width="60%">
+                            <tr>
+                                <th>Method name</th>
+                                <th style="width: 70%"> Description </th>                        
+                            </tr>
+                            
+                            <tr>
+                                <td style="padding: 1%;" ><a href="#register_user">register_user</a></td>
+                                <td style="padding: 1%;">Registers a new user with the home agent.</td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="padding: 1%;" ><a href="#is_username_available">is_username_available</a></td>
+                                <td style="padding: 1%;">Checks if a username is already registered with the home agent or not.</td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="padding: 1%;" ><a href="#authenticate_user">authenticate_user</a></td>
+                                <td style="padding: 1%;">Authenticate a user against the provided username and password. </td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="padding: 1%;" ><a href="#register_device">register_device</a></td>
+                                <td style="padding: 1%;">Register a new device for a user. </td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="padding: 1%;" ><a href="#update_device">update_device</a></td>
+                                <td style="padding: 1%;">Update an already registered device's information. </td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="padding: 1%;" ><a href="#is_devicename_available">is_devicename_available</a></td>
+                                <td style="padding: 1%;">Checks if a device name is already registered against a given username. </td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="padding: 1%;" ><a href="#delete_device">delete_device</a></td>
+                                <td style="padding: 1%;">Deletes a user's device identified by the devicename. </td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="padding: 1%;" ><a href="#get_user_device">get_user_device</a></td>
+                                <td style="padding: 1%;">Obtain a list of all devices belonging to a user.  </td>
+                            </tr>
+                            
+                        </table>    
+                    </div>
+                    
                     <br />
                     <h2>I. User Device and Home Agent API</h2>
                     
-                    <h3>Ia. Register a new user (<font face="courier" size="2.5%">method=register_user</font>)</h3>
+                    <a id="register_user"></a>
+                    <h3>I(a). Register a new user (<font face="courier" size="2.5%">method=register_user</font>)</h3>
                     
                     <h4>Description</h4>
                     Registers a new user with the home agent.
                     
                     <h4>Parameters</h4>
-                    <table border="1" cellspacing="0" width="50%">
+                    <table border="1" cellspacing="0" width="60%">
                         <tr>
                             <th style="padding: 1%">Parameter Name</th>
                             <th style="padding: 1%">Required</th>
@@ -197,16 +249,18 @@
                         </tr>
                     </table>
                     
+                    <br />
                     <h4>Example:</h4>
-                    <code>http://uw01.pwebproject.net:8088/?method=register_user&amp;username=bob123&amp;password=mypass&amp;
-                        email=bob@uwaterloo.ca&amp;fullname=Bob+Dylan&amp;location=Waterloo,Ontario,Canada&amp;affiliation=
-                        Univerity+of+Waterloo
-                    </code>
+                    <div class="code">
+                        http://uw01.pwebproject.net:8088/?method=register_user&amp;username=bob123&amp;password=mypass&amp;email=bob@uwaterloo.ca&amp;fullname=Bob+Dylan&amp;location=Waterloo,Ontario,Canada&amp;affiliation=Univerity+of+Waterloo    
+                    </div>
+                    
 
                     <h4>Return Value</h4>
                     <b>On Success: </b> <code>{"status":"success"}</code><br />
                     <b>On Failure: </b> <code>{"status":"success", "error":"&lt;error_code&gt;"}</code>
                     
+                    <br />
                     <h4>Error Codes</h4>
                     <table border="1" cellspacing="0" width="50%">
                         <tr>
@@ -215,8 +269,8 @@
                         </tr>
                         
                         <tr>
-                            <td style="padding: 1%" align="center">HAE:7501</td>
-                            <td style="padding: 1%">Username is not available</td>
+                            <td style="padding: 1%" align="center">APP:7501</td>
+                            <td style="padding: 1%">Username already exists</td>
                         </tr>
                         
                         <tr>
@@ -226,13 +280,15 @@
                     </table>
                     
                     <br />
-                    <h3>Ib. Check availability of a username (<font face="courier" size="2.5%">method=is_username_available</font>)</h3>
+                    
+                    <a id="is_username_available"></a>
+                    <h3>I(b) Check availability of a username (<font face="courier" size="2.5%">method=is_username_available</font>)</h3>
                     
                     <h4>Description</h4>
                     Checks if a username is already registered with the home agent or not.
                     
                     <h4>Parameters</h4>
-                    <table border="1" cellspacing="0" width="50%">
+                    <table border="1" cellspacing="0" width="60%">
                         <tr>
                             <th style="padding: 1%">Parameter Name</th>
                             <th style="padding: 1%">Required</th>
@@ -245,10 +301,12 @@
                             <td align="left" style="padding: 1%">Username to check</td>
                         </tr>
                     </table>
-                    
+                    <br />
+                     
                     <h4>Example:</h4>
-                    <code>http://uw01.pwebproject.net:8088/?method=is_username_available&amp;username=bob123
-                    </code>
+                    <div class="code">
+                        http://uw01.pwebproject.net:8088/?method=is_username_available&amp;username=bob123
+                    </div>
 
                     <h4>Return Value</h4>
                     <b>If username is available: </b> <code>{"status":"success", "availability":"yes"}</code><br />
@@ -263,8 +321,153 @@
                         </tr>
                         
                         <tr>
-                            <td style="padding: 1%" align="center">HAE:7501</td>
-                            <td style="padding: 1%">Username is not available</td>
+                            <td style="padding: 1%" align="center">CDB:&lt;number&gt;</td>
+                            <td style="padding: 1%">Cassandra database related error</td>
+                        </tr>
+                    </table>
+                    <br />
+                    
+                    <a id="authenticate_user"></a>
+                    <h3>I(c). Authenticate a user (<font face="courier" size="2.5%">method=authenticate_user</font>)</h3>
+                    
+                    <h4>Description</h4>
+                    Authenticate a user against the provided username and password.
+                    
+                    <h4>Parameters</h4>
+                    <table border="1" cellspacing="0" width="60%">
+                        <tr>
+                            <th style="padding: 1%">Parameter Name</th>
+                            <th style="padding: 1%">Required</th>
+                            <th style="padding: 1%">Description</th>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>username</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">Username</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>password</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">Password</td>
+                        </tr>
+                    </table>
+                    <br />
+                     
+                    <h4>Example:</h4>
+                    <div class="code">
+                        http://uw01.pwebproject.net:8088/?method=authenticate_user&amp;username=bob123&amp;password=bobthebuilder
+                    </div>
+
+                    <h4>Return Value</h4>
+                    <b>If username and password is correct: </b> <code>{"status":"success", "authenticated":"yes"}</code><br />
+                    <b>If username or password is not correct: </b> <code>{"status":"success", "authenticated":"no"}</code> <br />
+                    <b>On error: </b> <code>{"status":"error", "error":"&lt;error_code&gt;"}</code>
+                    
+                    <h4>Error Codes</h4>
+                    <table border="1" cellspacing="0" width="50%">
+                        <tr>
+                            <th style="padding: 1%">Error Code</th>
+                            <th style="padding: 1%">Description</th>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td style="padding: 1%" align="center">CDB:&lt;number&gt;</td>
+                            <td style="padding: 1%">Cassandra database related error</td>
+                        </tr>
+                    </table>
+                    <br />
+                    
+                    <a id="register_device"></a>
+                    <h3>I(d) Register new device (<font face="courier" size="2.5%">method=register_device</font>)</h3>
+                    
+                    <h4>Description</h4>
+                    Register a new device for a user.
+                    
+                    <h4>Parameters</h4>
+                    <table border="1" cellspacing="0" width="60%">
+                        <tr>
+                            <th style="padding: 1%">Parameter Name</th>
+                            <th style="padding: 1%">Required</th>
+                            <th style="padding: 1%; width: 60%">Description</th>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>devicename</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">Name of the device</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>username</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">username of the user</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>type</td>
+                            <td>no</td>
+                            <td align="left" style="padding: 1%">Type of the device (e.g., laptop)</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>ip</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">IP address of the device</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>port</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">Port number of the service running on the device</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>os</td>
+                            <td>no</td>
+                            <td align="left" style="padding: 1%">Operating System of the device</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>description</td>
+                            <td>no</td>
+                            <td align="left" style="padding: 1%">A description of the device</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>is_indexed</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">Boolean value indicating whether the device will be publicly indexed (true) or not (false)</td>
+                        </tr>
+                    </table>
+                    <br />
+                     
+                    <h4>Example:</h4>
+                    <div class="code">
+                        http://uw01.pwebproject.net:8088/?method=register_device&amp;device_name=hammer&amp;username=bob123&amp;type=laptop&amp;ip=192.168.1.25&amp;port=8088&amp;os=windows&amp;is_indexed=true
+                    </div>
+
+                    <h4>Return Value</h4>
+                    <b>On Success: </b> <code>{"status":"success"}</code><br />
+                    <b>On Error: </b> <code>{"status":"success", "error":"&lt;error_code&gt;"}</code> <br />
+                    
+                    <h4>Error Codes</h4>
+                    <table border="1" cellspacing="0" width="50%">
+                        <tr>
+                            <th style="padding: 1%">Error Code</th>
+                            <th style="padding: 1%">Description</th>
+                        </tr>
+                                                
+                        <tr>
+                            <td style="padding: 1%" align="center">APP:6401</td>
+                            <td style="padding: 1%">Device name already exists for this user</td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="padding: 1%" align="center">APP:7502</td>
+                            <td style="padding: 1%">User does not exist</td>
                         </tr>
                         
                         <tr>
@@ -272,18 +475,277 @@
                             <td style="padding: 1%">Cassandra database related error</td>
                         </tr>
                     </table>
-                    
                     <br />
-                    <h2>Crawler and Home Agent API</h2>
+                
+                
+                <a id="update_device"></a>
+                <h3>I(e). Update device information (<font face="courier" size="2.5%">method=update_device</font>)</h3>
+                    
+                    <h4>Description</h4>
+                    Update an already registered device's information.
+                    
+                    <h4>Parameters</h4>
+                    <table border="1" cellspacing="0" width="60%">
+                        <tr>
+                            <th style="padding: 1%">Parameter Name</th>
+                            <th style="padding: 1%">Required</th>
+                            <th style="padding: 1%; width: 60%">Description</th>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>devicename</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">Name of the device</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>username</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">username of the user</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>type</td>
+                            <td>no</td>
+                            <td align="left" style="padding: 1%">Type of the device (e.g., laptop)</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>ip</td>
+                            <td>no</td>
+                            <td align="left" style="padding: 1%">IP address of the device</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>port</td>
+                            <td>no</td>
+                            <td align="left" style="padding: 1%">Port number of the service running on the device</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>os</td>
+                            <td>no</td>
+                            <td align="left" style="padding: 1%">Operating System of the device</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>description</td>
+                            <td>no</td>
+                            <td align="left" style="padding: 1%">A description of the device</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>is_indexed</td>
+                            <td>no</td>
+                            <td align="left" style="padding: 1%">Boolean value indicating whether the device will be publicly indexed (true) or not (false)</td>
+                        </tr>
+                    </table>
+                    <br />
+                     
+                    <h4>Example:</h4>
+                    <div class="code">
+                        http://uw01.pwebproject.net:8088/?method=register_device&amp;device_name=hammer&amp;username=bob123&amp;ip=192.168.2.25&amp;port=8088
+                    </div>
+
+                    <h4>Return Value</h4>
+                    <b>On Success: </b> <code>{"status":"success"}</code><br />
+                    <b>On Error: </b> <code>{"status":"success", "error":"&lt;error_code&gt;"}</code> <br />
+                    
+                    <h4>Error Codes</h4>
+                    <table border="1" cellspacing="0" width="50%">
+                        <tr>
+                            <th style="padding: 1%">Error Code</th>
+                            <th style="padding: 1%">Description</th>
+                        </tr>
+                                                
+                        <tr>
+                            <td style="padding: 1%" align="center">APP:6402</td>
+                            <td style="padding: 1%">Device name does not exist</td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="padding: 1%" align="center">APP:7502</td>
+                            <td style="padding: 1%">User does not exist</td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="padding: 1%" align="center">CDB:&lt;number&gt;</td>
+                            <td style="padding: 1%">Cassandra database related error</td>
+                        </tr>
+                    </table>
+                    <br />
+                    
+                    
+                    <a id="is_devicename_available"></a>
+                    <h3>I(f). Check availability of a device name (<font face="courier" size="2.5%">method=is_devicename_available</font>)</h3>
+                    
+                    <h4>Description</h4>
+                    Checks if a device name is already registered against a given username. 
+                    
+                    <h4>Parameters</h4>
+                    <table border="1" cellspacing="0" width="60%">
+                        <tr>
+                            <th style="padding: 1%">Parameter Name</th>
+                            <th style="padding: 1%">Required</th>
+                            <th style="padding: 1%">Description</th>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>devicename</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">Device name to check</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>username</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">Username to check against</td>
+                        </tr>
+                    </table>
+                    <br />
+                     
+                    <h4>Example:</h4>
+                    <div class="code">
+                        http://uw01.pwebproject.net:8088/?method=is_devicename_available&amp;username=bob123&amp;devicename=hammer
+                    </div>
+
+                    <h4>Return Value</h4>
+                    <b>If devicename is available: </b> <code>{"status":"success", "availability":"yes"}</code><br />
+                    <b>If devicename is not available: </b> <code>{"status":"success", "availability":"no", "suggestion" : ["&lt;device1&gt;, &lt;device2&gt;, ..."]}</code> <br />
+                    <b>On error: </b> <code>{"status":"error", "error":"&lt;error_code&gt;"}</code>
+                    
+                    <h4>Error Codes</h4>
+                    <table border="1" cellspacing="0" width="50%">
+                        <tr>
+                            <th style="padding: 1%">Error Code</th>
+                            <th style="padding: 1%">Description</th>
+                        </tr>
+                        
+                        <tr>
+                            <td style="padding: 1%" align="center">CDB:&lt;number&gt;</td>
+                            <td style="padding: 1%">Cassandra database related error</td>
+                        </tr>
+                    </table>
+                    <br />
+                    
+                    <a id="delete_device"></a>
+                    <h3>I(h). Delete a device (<font face="courier" size="2.5%">method=delete_device</font>)</h3>
+                    
+                    <h4>Description</h4>
+                    Deletes a user's device identified by the devicename.
+                    
+                    <h4>Parameters</h4>
+                    <table border="1" cellspacing="0" width="60%">
+                        <tr>
+                            <th style="padding: 1%">Parameter Name</th>
+                            <th style="padding: 1%">Required</th>
+                            <th style="padding: 1%">Description</th>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>devicename</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">Device to delete</td>
+                        </tr>
+                        
+                        <tr align="center">
+                            <td>username</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">Owner of the device</td>
+                        </tr>
+                    </table>
+                    <br />
+                     
+                    <h4>Example:</h4>
+                    <div class="code">
+                        http://uw01.pwebproject.net:8088/?method=delete_device&amp;username=bob123&amp;devicename=hammer
+                    </div>
+
+                    <h4>Return Value</h4>
+                    <b>On Success: </b> <code>{"status":"success"}</code><br />
+                    <b>On error: </b> <code>{"status":"error", "error":"&lt;error_code&gt;"}</code>
+                    
+                    <h4>Error Codes</h4>
+                    <table border="1" cellspacing="0" width="50%">
+                        <tr>
+                            <th style="padding: 1%">Error Code</th>
+                            <th style="padding: 1%">Description</th>
+                        </tr>
+                        
+                        <tr>
+                            <td style="padding: 1%" align="center">APP:6402</td>
+                            <td style="padding: 1%">Device does not exist</td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="padding: 1%" align="center">CDB:&lt;number&gt;</td>
+                            <td style="padding: 1%">Cassandra database related error</td>
+                        </tr>
+                    </table>
+                    <br />
+                    
+                    
+                    
+                    <a id="get_user_device"></a>
+                    <h3>I(h). Get device list of a user (<font face="courier" size="2.5%">method=get_user_device</font>)</h3>
+                    
+                    <h4>Description</h4>
+                    Obtain a list of all devices belonging to a user
+                    
+                    <h4>Parameters</h4>
+                    <table border="1" cellspacing="0" width="60%">
+                        <tr>
+                            <th style="padding: 1%">Parameter Name</th>
+                            <th style="padding: 1%">Required</th>
+                            <th style="padding: 1%">Description</th>
+                        </tr>
+
+                        <tr align="center">
+                            <td>username</td>
+                            <td>yes</td>
+                            <td align="left" style="padding: 1%">Identifies the device owner</td>
+                        </tr>
+                    </table>
+                    <br />
+                     
+                    <h4>Example:</h4>
+                    <div class="code">
+                        http://uw01.pwebproject.net:8088/?method=get_user_device&amp;username=bob123
+                    </div>
+
+                    <h4>Return Value</h4>
+                    <b>On Success: </b> <code>{"status":"success", "username":"&lt;username&gt;", "devices":[{"devicename":"&lt;devicename&gt;", "type":"&lt;type&gt;", "ip":"&lt;ip&gt;", "port":"&lt;port&gt;", "dir_ip":"&lt;dir_ip&gt;", "dir_port":"&lt;dir_port&gt;", "public_folder":"&lt;public_folder&gt;", "os":"&lt;os&gt;", "description":"&lt;description&gt;"}, ...]}
+</code><br />
+                    <b>On error: </b> <code>{"status":"error", "error":"&lt;error_code&gt;"}</code>
+                    
+                    <h4>Error Codes</h4>
+                    <table border="1" cellspacing="0" width="50%">
+                        <tr>
+                            <th style="padding: 1%">Error Code</th>
+                            <th style="padding: 1%">Description</th>
+                        </tr>
+                        
+                        <tr>
+                            <td style="padding: 1%" align="center">APP:7502</td>
+                            <td style="padding: 1%">User does not exist</td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="padding: 1%" align="center">CDB:&lt;number&gt;</td>
+                            <td style="padding: 1%">Cassandra database related error</td>
+                        </tr>
+                    </table>
+                    <br />
+                    
 				</section>
 
 				<section class="partners">
 					
 					<div id="partners-slider">
 						<div class="slider-holder2">
-						    <img src="/static/cms/css/images/nserc.png" width="128" height="52" />
-						    <img src="/static/cms/css/images/bell.png" width="108" height="52" />
-						    <img src="/static/cms/css/images/orange.png" width="52" height="52" />
+						    <img src="images/nserc.png" width="128" height="52" />
+						    <img src="images/bell.png" width="108" height="52" />
+						    <img src="images/orange.png" width="52" height="52" />
 						    <!-- <img src="/static/cms/css/images/partners4.png" width="121" height="52" />
 						    <img src="/static/cms/css/images/partners1.png" width="92" height="52" />
 						    <img src="/static/cms/css/images/partners2.png" width="172" height="52" />

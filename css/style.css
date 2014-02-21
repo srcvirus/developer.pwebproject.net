@@ -1,3 +1,9 @@
+.code {
+	background: #DEDEDE;
+	font-family: "Courier New", Courier, monospace;
+	width: 60%;
+}
+
 @font-face {
     font-family: 'pt-sans';
     src: url('fonts/ptc75f-webfont.eot');
